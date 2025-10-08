@@ -1,4 +1,3 @@
-// src/webcomponents/uni-loader.ts
 // Web component that implements multiple loader styles via `type` attribute.
 // Attributes: type (spinner, dots, bars, bounce, skeleton), color, size, speed, variant
 

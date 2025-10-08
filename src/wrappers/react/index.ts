@@ -1,7 +1,8 @@
 // React wrapper (TSX). Exports a simple Loader component that uses the <uni-loader> element.
 // Works in JS & TS React projects. For server-side frameworks (Next) wrap with dynamic import / SSR false.
 
-import React, { useEffect } from 'react';
+import * as React from 'react';
+import { useEffect } from 'react';
 
 export type LoaderProps = {
   type?: 'spinner' | 'dots' | 'bars' | 'bounce' | 'skeleton';
@@ -22,12 +23,12 @@ async function ensureRegistered() {
 
 const toAttr = (v: any) => (v == null ? undefined : String(v));
 
-export const Loader: React.FC<LoaderProps> = (props) => {
+export const Loader: React.FC<LoaderProps> = (props: LoaderProps) => {
   useEffect(() => {
     ensureRegistered();
   }, []);
 
-  const { type, color, size, speed, variant, className, style, ...rest } = props as any;
+  const { type, color, size, speed, variant, className, style, ...rest } = props;
   // React uses 'className' but HTML custom element expects 'class'
   const attrs: any = {
     type,
