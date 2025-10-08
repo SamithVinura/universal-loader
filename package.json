@@ -1,6 +1,6 @@
 {
   "name": "@web-app/universal-loaders",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Framework-agnostic loaders (web components) + framework wrappers for React, Vue, Angular. JavaScript & TypeScript ready.",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
