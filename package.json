@@ -1,0 +1,51 @@
+{
+  "name": "@web-app/universal-loaders",
+  "version": "1.0.0",
+  "description": "Framework-agnostic loaders (web components) + framework wrappers for React, Vue, Angular. JavaScript & TypeScript ready.",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/types/custom-elements.d.ts",
+  "files": [
+    "dist"
+  ],
+  "sideEffects": true,
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "rollup -c",
+    "prepare": "npm run build"
+  },
+  "keywords": [
+    "loader",
+    "spinner",
+    "web-component",
+    "react",
+    "vue",
+    "angular",
+    "loaders",
+    "skeleton"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YOUR_USERNAME/universal-loaders.git"
+  },
+  "author": "Your Name <you@example.com>",
+  "peerDependencies": {
+    "react": "^16 || ^17 || ^18",
+    "vue": "^3",
+    "@angular/core": ">=12"
+  },
+  "devDependencies": {
+    "rollup": "^3.0.0",
+    "rollup-plugin-terser": "^7.0.2",
+    "rollup-plugin-typescript2": "^0.34.1",
+    "@rollup/plugin-node-resolve": "^15.0.1",
+    "@rollup/plugin-commonjs": "^24.0.0",
+    "typescript": "^5.0.0",
+    "rimraf": "^5.0.0"
+  },
+  "bugs": {
+    "url": "https://github.com/YOUR_USERNAME/universal-loaders/issues"
+  },
+  "homepage": "https://github.com/YOUR_USERNAME/universal-loaders#readme"
+}
