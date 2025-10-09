@@ -100,7 +100,7 @@ function skeletonTemplate(sizePx: string, color: string, dur: string) {
 
 export class UniLoader extends HTMLElement {
   static get observedAttributes() {
-    return ['type', 'color', 'size', 'speed', 'variant', 'aria-label'];
+  return ['type', 'color', 'size', 'speed', 'variant', 'aria-label', 'position', 'blur'];
   }
 
   private _root: ShadowRoot;
@@ -119,25 +119,63 @@ export class UniLoader extends HTMLElement {
   }
 
   render() {
+    // Visibility logic
+
     const type = (this.getAttribute('type') || 'spinner').toLowerCase();
     const color = this.getAttribute('color') || 'currentColor';
     const size = pxOr(this.getAttribute('size') || undefined, '40');
     const speedVal = parseSpeed(this.getAttribute('speed') || undefined);
-    // animation duration: smaller speed -> slower, so we invert: higher speed -> shorter duration
     const durationSec = `${(1 / speedVal).toFixed(3)}s`;
 
-    let html = '';
-    switch (type) {
-      case 'dots': html = dotsTemplate(size, color, durationSec); break;
-      case 'bars': html = barsTemplate(size, color, durationSec); break;
-      case 'bounce': html = bounceTemplate(size, color, durationSec); break;
-      case 'skeleton': html = skeletonTemplate(size, color, durationSec); break;
-      case 'spinner':
+    // Position logic
+    const position = (this.getAttribute('position') || 'center').toLowerCase();
+    let positionStyle = '';
+    switch (position) {
+      case 'center':
+        positionStyle = 'position:fixed;top:0;left:0;width:100vw;height:100vh;display:flex;align-items:center;justify-content:center;z-index:9999;';
+        break;
+      case 'top-left':
+        positionStyle = 'position:fixed;top:0;left:0;z-index:9999;display:flex;align-items:flex-start;justify-content:flex-start;width:100vw;height:100vh;';
+        break;
+      case 'top-right':
+        positionStyle = 'position:fixed;top:0;right:0;z-index:9999;display:flex;align-items:flex-start;justify-content:flex-end;width:100vw;height:100vh;';
+        break;
+      case 'bottom-left':
+        positionStyle = 'position:fixed;bottom:0;left:0;z-index:9999;display:flex;align-items:flex-end;justify-content:flex-start;width:100vw;height:100vh;';
+        break;
+      case 'bottom-right':
+        positionStyle = 'position:fixed;bottom:0;right:0;z-index:9999;display:flex;align-items:flex-end;justify-content:flex-end;width:100vw;height:100vh;';
+        break;
       default:
-        html = spinnerTemplate(size, color, durationSec);
+        positionStyle = '';
     }
 
-    this._root.innerHTML = html;
+    // Blur logic
+    const blur = this.getAttribute('blur');
+    let blurHtml = '';
+    if (blur === 'true' || blur === '1') {
+      blurHtml = `<div style=\"position:absolute;top:0;left:0;width:100vw;height:100vh;background:rgba(255,255,255,0.4);backdrop-filter:blur(6px);z-index:9998;\"></div>`;
+    } else if (blur === 'dark') {
+      blurHtml = `<div style=\"position:absolute;top:0;left:0;width:100vw;height:100vh;background:rgba(30,30,30,0.7);backdrop-filter:blur(6px);z-index:9998;\"></div>`;
+    }
+
+    let loaderHtml = '';
+    switch (type) {
+      case 'dots': loaderHtml = dotsTemplate(size, color, durationSec); break;
+      case 'bars': loaderHtml = barsTemplate(size, color, durationSec); break;
+      case 'bounce': loaderHtml = bounceTemplate(size, color, durationSec); break;
+      case 'skeleton': loaderHtml = skeletonTemplate(size, color, durationSec); break;
+      case 'spinner':
+      default:
+        loaderHtml = spinnerTemplate(size, color, durationSec);
+    }
+
+    // Compose final HTML
+    if (positionStyle) {
+      this._root.innerHTML = `<div style=\"${positionStyle}position:relative;\">${blurHtml}<div style=\"position:relative;z-index:10000;\">${loaderHtml}</div></div>`;
+    } else {
+      this._root.innerHTML = `${blurHtml}<div style=\"position:relative;z-index:10000;\">${loaderHtml}</div>`;
+    }
   }
 }
 
