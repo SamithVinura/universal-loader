@@ -375,25 +375,6 @@ Or with `unpkg` ESM entry:
 
 ---
 
-### Contributing
-
-PRs welcome! Suggested workflow:
-
-```bash
-git clone https://github.com/SamithVinura/universal-loader.git
-cd universal-loader
-pnpm i # or npm i / yarn
-npm run build
-```
-
-- Code lives in `src/`:
-  - `src/webcomponents/uni-loader.ts` – web component implementation
-  - `src/wrappers/react` – react wrapper helper
-- Build outputs to `dist/` via Rollup.
-- Please run a build before submitting PRs.
-
----
-
 ### Versioning
 
 This project follows Semantic Versioning (SemVer). See GitHub Releases for changelog and upgrade notes.
